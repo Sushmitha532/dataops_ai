@@ -17,3 +17,9 @@ if not NEBIUS_API_KEY:
 
 # Initialize the OpenAI-compatible client configured for Nebius Token Factory
 nebius_client = OpenAI(base_url=NEBIUS_BASE_URL, api_key=NEBIUS_API_KEY)
+
+nebius_client = OpenAI(
+    base_url=NEBIUS_BASE_URL, 
+    api_key=NEBIUS_API_KEY
+    # Remove any extraneous parameters like proxies=... if present here
+)

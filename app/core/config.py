@@ -1,4 +1,5 @@
 from openai import OpenAI
+import openai._base_client
 import httpx
 from openai._base_client import SyncHttpxClientWrapper
 

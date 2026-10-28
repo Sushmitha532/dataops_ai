@@ -17,10 +17,8 @@ if not NEBIUS_API_KEY:
 
 # Initialize the OpenAI-compatible client configured for Nebius Token Factory
 
-import httpx
-
+# Initialize the OpenAI-compatible client configured for Nebius Token Factory
 nebius_client = OpenAI(
-    base_url=NEBIUS_BASE_URL,
-    api_key=NEBIUS_API_KEY,
-    http_client=httpx.Client(proxies=None)
+    base_url=NEBIUS_BASE_URL, 
+    api_key=NEBIUS_API_KEY
 )

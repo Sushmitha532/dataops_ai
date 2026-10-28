@@ -26,7 +26,9 @@ def init_sample_data():
     """)
     
     # Insert sample data if table is empty
-    count = conn.fetchone()[0]
+    # Safe way to handle fetchone() result
+    row = conn.fetchone()
+    count = row[0] if row is not None else 0
     if count == 0:
         conn.execute("""
             INSERT INTO pipeline_runs VALUES 

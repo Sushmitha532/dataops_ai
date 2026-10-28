@@ -1,10 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from app.agents.router import route_agent  # or your router function
-from app.agents.router import route_user_request as agent_router
+from app.agents.router import route_user_request
 
-app.include_router(agent_router)
-
+# Initialize the FastAPI app instance
 app = FastAPI()
 
 class ChatRequest(BaseModel):
@@ -13,7 +11,8 @@ class ChatRequest(BaseModel):
 @app.post("/chat")
 def chat_endpoint(request: ChatRequest):
     try:
-        response = route_agent(request.prompt)
+        # Call your supervisor router directly
+        response = route_user_request(request.prompt)
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

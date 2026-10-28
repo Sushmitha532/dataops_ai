@@ -1,24 +1,16 @@
-import os
-from dotenv import load_dotenv
-from openai import OpenAI
+import openai
+from openai._base_client import SyncHttpxClientWrapper
 
-# Load environment variables from the .env file
-load_dotenv()
+# Patch for httpx 0.28+ compatibility with OpenAI client
+class CustomHttpxClientWrapper(SyncHttpxClientWrapper):
+    def __init__(self, *args, **kwargs):
+        kwargs.pop("proxies", None)
+        super().__init__(*args, **kwargs)
 
-# Retrieve Nebius credentials and model configuration from environment
-NEBIUS_API_KEY = os.getenv("NEBIUS_API_KEY")
-NEBIUS_BASE_URL = os.getenv("NEBIUS_BASE_URL", "https://api.nebius.ai/v1/")
-MODEL_NAME = os.getenv("MODEL_NAME", "nvidia/nemotron-3-ultra-70b")
-
-if not NEBIUS_API_KEY:
-  raise ValueError(
-      "NEBIUS_API_KEY is missing from environment variables or .env file."
-  )
-
-# Initialize the OpenAI-compatible client configured for Nebius Token Factory
+openai._base_client.SyncHttpxClientWrapper = CustomHttpxClientWrapper
 
 # Initialize the OpenAI-compatible client configured for Nebius Token Factory
 nebius_client = OpenAI(
-    base_url=NEBIUS_BASE_URL, 
+    base_url=NEBIUS_BASE_URL,
     api_key=NEBIUS_API_KEY
 )

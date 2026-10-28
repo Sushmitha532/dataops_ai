@@ -1,4 +1,5 @@
-import openai
+from openai import OpenAI
+import httpx
 from openai._base_client import SyncHttpxClientWrapper
 
 # Patch for httpx 0.28+ compatibility with OpenAI client

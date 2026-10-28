@@ -48,3 +48,5 @@ def route_user_request(user_prompt: str) -> str:
             
     except Exception as e:
         return run_sql_agent(user_prompt)
+    # Alias so main.py can import route_agent successfully
+route_agent = route_user_request
